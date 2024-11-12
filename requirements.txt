@@ -1,0 +1,4 @@
+xmltodict
+openai
+streamlit
+python-dotenv

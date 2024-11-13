@@ -7,7 +7,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-
 from dotenv import load_dotenv
 
 load_dotenv()  # Carrega as variáveis de ambiente
@@ -47,15 +46,38 @@ def send_email_with_attachment(file_path, id):
             server.starttls()
             server.login(sender_email, sender_password)
             server.sendmail(sender_email, recipient_email, msg.as_string())
+            print("E-mail enviado com sucesso!")
     except Exception as e:
         print(f"Erro ao enviar e-mail: {e}")
 
 
 def send_evaluation_as_file(evaluation_data, delete_tmp_file=True):
-    file_path = "tmp_file.json"
+    file_path = Path(os.getcwd()) / "tmp_file.json"
     save_evaluation_data(evaluation_data, file_path)
-    send_email_with_attachment(file_path, evaluation_data["id"])
+    send_email_with_attachment(file_path, evaluation_data[id])
     
     if delete_tmp_file:
         os.remove(file_path)
 
+
+# # Exemplo de uso
+# evaluation_data = {
+#     "rating": 5,
+#     "justification": "Muito bom.",
+#     "response": {
+#         "nota": "A",
+#         "explicacao": "Excelente desempenho."
+#     }
+# }
+
+# file_path = 'evaluation_data.json'
+# save_evaluation_data(evaluation_data, file_path)
+
+# # Configuração do e-mail
+# sender_email = "pibic.llmlattes2024@gmail.com"
+# sender_password = "wodu funh omtw hrhh"
+# recipient_email = "pibic.llmlattes2024@gmail.com"
+# subject = "Avaliação JSON"
+# body = "Segue em anexo o arquivo JSON com a avaliação."
+
+#send_email_with_attachment(sender_email, sender_password, recipient_email, subject, body, file_path)

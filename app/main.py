@@ -37,12 +37,12 @@ def main():
         st.header("Escolher Currículo")
         cont1 = st.container(height=cont_height)
 
+        # Upload de novo currículo
+        uploaded_file = cont1.file_uploader("Faça upload de um currículo (XML)", type="xml")
+
         # Exibe currículos existentes no diretório
         stored_resumes = list_curriculos(CURRICULO_DIR)
-        selected_resume = cont1.selectbox("Escolha um currículo existente", stored_resumes)
-
-        # Upload de novo currículo
-        uploaded_file = cont1.file_uploader("Ou faça o upload do currículo (XML)", type="xml")
+        selected_resume = cont1.selectbox("Ou escolha um currículo existente do nosso banco de dados", stored_resumes)
 
         # Escolha final do currículo: preferindo o upload se houver
         if uploaded_file:

@@ -70,22 +70,23 @@ def main():
 
         if cont2.button("Enviar para o modelo"):
             
-            # Processando os dados de acordo com a consulta escolhida
-            processed_data = extract_attributes(prompts[selected_query], curriculo_data)
-            st.session_state['processed_data'] = processed_data
+            with st.spinner("Carregando..."):
+                # Processando os dados de acordo com a consulta escolhida
+                processed_data = extract_attributes(prompts[selected_query], curriculo_data)
+                st.session_state['processed_data'] = processed_data
 
-            # Mostrando os dados que serão usados na consulta
-            data_description = cont2.expander("Dados usados")
-            data_container = data_description.container(height=200)
-            data_container.write(processed_data)
+                # Mostrando os dados que serão usados na consulta
+                data_description = cont2.expander("Dados usados")
+                data_container = data_description.container(height=200)
+                data_container.write(processed_data)
 
-            # Envio da consulta e obtenção da resposta do LLM
-            response, intermediary_data = handle_query(processed_data, prompts[selected_query])
-            st.session_state['response'] = response
-            st.session_state['instermediary_data'] = intermediary_data
+                # Envio da consulta e obtenção da resposta do LLM
+                response, intermediary_data = handle_query(processed_data, prompts[selected_query])
+                st.session_state['response'] = response
+                st.session_state['instermediary_data'] = intermediary_data
 
-            cont2.write(f"#### Nota")
-            cont2.write(f"{response.nota}")
+                cont2.write(f"#### Nota")
+                cont2.write(f"{response.nota}")
 
             # Mostrando os dados que serão usados na consulta
             explanation_description = cont2.expander("Explicação")
